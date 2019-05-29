@@ -12,7 +12,7 @@ In your Java application add a dependency on:
 <dependency>
     <groupId>com.infobelt</groupId>
     <artifactId>spring-boot-jest-ssl</artifactId>
-    <version>0.2.8</version>
+    <version>0.2.9</version>
 </dependency>
 ```
 
