@@ -6,7 +6,7 @@
 
     <groupId>com.infobelt</groupId>
     <artifactId>spring-boot-jest-ssl</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
 
     <name>Spring Boot Jest SSL</name>
 
@@ -52,17 +52,40 @@
         </repository>
     </repositories>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>2.8.2</version></plugin>
-    
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M1</version></plugin>
-    </plugins>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M1</version>
+            </plugin>
+            <plugin>
+                <groupId>com.google.code.maven-replacer-plugin</groupId>
+                <artifactId>replacer</artifactId>
+                <version>1.5.2</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>replace</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <file>${project.basedir}/README.md</file>
+                    <replacements>
+                        <replacement>
+                            <token>&lt;version&gt;(.*)&lt;/version&gt;</token>
+                            <value>&lt;version&gt;${project.version}&lt;/version&gt;</value>
+                        </replacement>
+                    </replacements>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
-  </project>
+</project>

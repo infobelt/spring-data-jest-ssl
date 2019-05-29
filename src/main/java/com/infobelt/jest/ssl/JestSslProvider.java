@@ -1,5 +1,6 @@
 package com.infobelt.jest.ssl;
 
+import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.ssl.SSLContextBuilder;
@@ -38,7 +39,7 @@ public class JestSslProvider {
             KeyStore truststore = KeyStore.getInstance("jks");
 
             if (properties.getKeyStorePath() == null) {
-                throw new RuntimeException("If you want SSL you need to provide a keyStorePath");
+                throw new RuntimeException("If you want SSL, you need to provide a keyStorePath");
             }
 
             try (InputStream is = Files.newInputStream(properties.getKeyStorePath())) {
@@ -47,7 +48,7 @@ public class JestSslProvider {
             SSLContextBuilder sslBuilder = SSLContexts.custom()
                 .loadTrustMaterial(truststore, null);
             final SSLContext sslContext = sslBuilder.build();
-            HostnameVerifier hostnameVerifier = NoopHostnameVerifier.INSTANCE;
+            HostnameVerifier hostnameVerifier = new DefaultHostnameVerifier();
             SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext, hostnameVerifier);
             customizers.add(builder -> builder.sslSocketFactory(sslSocketFactory));
 
